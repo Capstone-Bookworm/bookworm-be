@@ -31,6 +31,9 @@ jobs: # a collection of steps
             source $BASH_ENV
             gem install bundler
       - run:
+          name: Gem Update
+          command: gem update --system
+      - run:
           name: Bundle Install
           command: bundle install
       - run:
