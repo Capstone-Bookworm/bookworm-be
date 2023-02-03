@@ -4,7 +4,7 @@ class CreateUserBooks < ActiveRecord::Migration[5.2]
       t.references :book, foreign_key: true
       t.references :user, foreign_key: true
       t.references :borrower
-      t.integer :status
+      t.integer :status, default: 0
 
       t.timestamps
     end

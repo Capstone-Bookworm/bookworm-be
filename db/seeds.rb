@@ -23,3 +23,10 @@ user_3 = User.third
 book_4 = Book.fourth
 book_5 = Book.fifth
 user_3.books << [book_4, book_5]
+
+UserBook.first.update(borrower_id: user_2.id, status: 1)
+UserBook.fourth.update(borrower_id: user_3.id, status: 1)
+
+UserBook.second.update(borrower_id: user_3.id, status: 2)
+
+UserBook.third.update(borrower_id: user_3.id, status: 3)

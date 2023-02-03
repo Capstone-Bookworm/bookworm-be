@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2023_02_02_211553) do
     t.bigint "book_id"
     t.bigint "user_id"
     t.bigint "borrower_id"
-    t.integer "status"
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_user_books_on_book_id"
