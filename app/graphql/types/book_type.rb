@@ -18,5 +18,12 @@ module Types
       borrower_id = UserBook.where(user_id: object.user_id).where(book_id: object.id).first.borrower_id
       User.find(borrower_id)
     end
+
+    field :users, [Types::UserType], null: false
+
+    def users
+      User.joins(:user_books)
+        .where("user_books.book_id = #{object.id}")
+    end
   end
 end

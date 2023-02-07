@@ -5,10 +5,10 @@ class GoogleBooksService
     end
   end
 
-  def self.search(title, author)
+  def self.search(title)
     response = conn.get('/books/v1/volumes') do |req|
       req.params['q'] = title
-      req.params['inauthor'] = author
+      req.params['intitle'] = title
     end
     JSON.parse(response.body, symbolize_names: true)
   end
