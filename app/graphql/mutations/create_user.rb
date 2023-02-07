@@ -4,7 +4,6 @@ class Mutations::CreateUser < Mutations::BaseMutation
   argument :location, String, required: true
   
   field :user, Types::UserType, null: false
-  field :errors, [String], null: false
 
   def resolve(email_address:, user_name:, location:)
     user = User.new(email_address: email_address, user_name: user_name, location: location)
@@ -13,11 +12,8 @@ class Mutations::CreateUser < Mutations::BaseMutation
         user: user,
         errors: []
       }
-    else 
-      {
-        user: nil,
-        errors: user.errors.full_messages
-      }
+    else
+      raise GraphQL::ExecutionError, user.errors.full_messages.join(", ")
     end
   end
 end
