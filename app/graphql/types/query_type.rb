@@ -23,5 +23,13 @@ module Types
     def books
       Book.take(20)
     end
+
+    field :book_search, [Types::BookType], null: false do
+      argument :title, String, required: true
+    end
+
+    def book_search(title:)
+      Book.where("title LIKE ?", "%#{title}%").limit(20)
+    end
   end
 end
