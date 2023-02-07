@@ -18,5 +18,10 @@ module Types
       User.find(id)
     end
 
+    field :books, [Types::BookType], null: false
+
+    def books
+      Book.take(20)
+    end
   end
 end
