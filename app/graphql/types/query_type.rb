@@ -26,6 +26,20 @@ module Types
       BooksFacade.get_book_objects(title)
     end
 
+    field :books, [Types::BookType], null: false
+
+    def books
+      Book.take(20)
+    end
+
+    field :book_search, [Types::BookType], null: false do
+      argument :title, String, required: true
+    end
+
+    def book_search(title:)
+      Book.where("title ILIKE ?", "%#{title}%").limit(20)
+    end
+
     field :book, Types::BookType, null: false do 
       argument :id, ID, required: true
     end
