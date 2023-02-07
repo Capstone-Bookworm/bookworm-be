@@ -13,9 +13,17 @@ module Types
     field :user, Types::UserType, null: false do 
       argument :id, ID, required: true
     end
-
+    
     def user(id:)
       User.find(id)
+    end
+    
+    field :google_books, [Types::GoogleBookType], null: false do 
+      argument :title, String, required: true
+    end
+    
+    def google_books(title:)
+      BooksFacade.get_book_objects(title)
     end
 
     field :book, Types::BookType, null: false do 
