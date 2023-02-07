@@ -29,7 +29,7 @@ module Types
     end
 
     def book_search(title:)
-      Book.where("title LIKE ?", "%#{title}%").limit(20)
+      Book.where("title ILIKE ?", "%#{title}%").limit(20)
     end
   end
 end
