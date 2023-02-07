@@ -5,7 +5,7 @@ RSpec.describe GoogleBooksService do
     describe '#search' do
       it 'returns JSON with search results of the query' do
         VCR.use_cassette('google_books_tmiahm') do
-          books = GoogleBooksService.search('The Moon is a Harsh Mistress', 'Heinlein')
+          books = GoogleBooksService.search('The Moon is a Harsh Mistress')
   
           expect(books[:items]).to be_a Array
           expect(books[:items][0][:volumeInfo][:title]).to be_a String
