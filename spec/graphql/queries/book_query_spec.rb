@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe Types::QueryType do
   describe 'query book' do
     it 'can query a single book' do
-      create_list(:book, 4)
       short_history = create(:book, id: 5, isbn: "9780307885166", title: "A Short History Of Nearly Everything", author: "Bill Bryson", image_url: "url", page_count: 876, summary: "This new edition")
       user = create(:user)
       borrower = create(:user)
