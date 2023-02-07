@@ -29,12 +29,11 @@ ActiveRecord::Schema.define(version: 2023_02_02_211553) do
   create_table "user_books", force: :cascade do |t|
     t.bigint "book_id"
     t.bigint "user_id"
-    t.bigint "borrower_id"
+    t.integer "borrower_id"
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_user_books_on_book_id"
-    t.index ["borrower_id"], name: "index_user_books_on_borrower_id"
     t.index ["user_id"], name: "index_user_books_on_user_id"
   end
 
@@ -48,5 +47,4 @@ ActiveRecord::Schema.define(version: 2023_02_02_211553) do
 
   add_foreign_key "user_books", "books"
   add_foreign_key "user_books", "users"
-  add_foreign_key "user_books", "users", column: "id"
 end

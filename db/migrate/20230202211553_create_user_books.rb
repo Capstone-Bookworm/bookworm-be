@@ -3,11 +3,10 @@ class CreateUserBooks < ActiveRecord::Migration[5.2]
     create_table :user_books do |t|
       t.references :book, foreign_key: true
       t.references :user, foreign_key: true
-      t.references :borrower
+      t.integer :borrower_id
       t.integer :status, default: 0
 
       t.timestamps
     end
-    add_foreign_key :user_books, :users, column: :id
   end
 end
