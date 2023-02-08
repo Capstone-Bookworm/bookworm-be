@@ -15,12 +15,8 @@ module Mutations
         book = Book.find_by(isbn: isbn)
         if book.nil?
           book = Book.new(isbn: isbn, title: title, author: author, summary: summary, page_count: page_count, image_url: image_url)
-          if book.save
-            book
-          else
-            raise GraphQL::ExecutionError, book.errors.full_messages.to_sentence
-          end
         end
+        raise GraphQL::ExecutionError, book.errors.full_messages.to_sentence if !book.save 
         UserBook.create(user_id: user_id.to_i, book_id: book.id)
       end
     end
