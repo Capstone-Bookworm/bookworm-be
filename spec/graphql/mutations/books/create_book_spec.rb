@@ -31,10 +31,6 @@ module Mutations
           expect(book).to have_key(:id)
         end
 
-        it 'adds the same book if book is already existing to user' do
-
-        end
-
         it 'returns an error if attributes are missing' do
           post "/graphql", params: { query: sad_query_missing_attrs }
 
@@ -44,15 +40,16 @@ module Mutations
           expect(json[:errors][0][:message]).to eq("Title can't be blank and Author can't be blank")
         end
 
-        it 'returns the same book if already existing in db' do
+        it 'returns the already existing book if isbn is matching' do
           post "/graphql", params: { query: book_happy_query }
           json = JSON.parse(response.body, symbolize_names: true)
+          
           first_book_isbn = json[:data][:createBook][:book][:isbn]
 
           post "/graphql", params: { query: not_uniq_isbn }
           json = JSON.parse(response.body, symbolize_names: true)
           book = json[:data][:createBook][:book]
-          expect(book[:isbn]).to eq("1784752223")
+          
           expect(book[:isbn]).to eq(first_book_isbn)
           expect(book[:title]).to eq("Jurassic Park")
         end
