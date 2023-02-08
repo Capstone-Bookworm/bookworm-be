@@ -3,13 +3,17 @@ require 'rails_helper'
 module Mutations
   module Books
     RSpec.describe CreateBook, type: :request do
+      before do
+        @user = create(:user, id: 1)
+      end
       describe '.resolve' do
         it 'creates a book' do
           expect(Book.count).to eq(0)
-
+          
           post "/graphql", params: { query: book_happy_query }
 
           expect(Book.count).to eq(1)
+          expect(@user.books.count).to eq(1)
         end
 
         it 'returns a Book' do
@@ -27,23 +31,30 @@ module Mutations
           expect(book).to have_key(:id)
         end
 
+        it 'adds the same book if book is already existing to user' do
+
+        end
+
         it 'returns an error if attributes are missing' do
           post "/graphql", params: { query: sad_query_missing_attrs }
 
           json = JSON.parse(response.body, symbolize_names: true)
-
+          
           expect(json[:data][:createBook]).to be_nil
           expect(json[:errors][0][:message]).to eq("Title can't be blank and Author can't be blank")
         end
 
-        it 'returns an error if isbn is not unique' do
+        it 'returns the same book if already existing in db' do
           post "/graphql", params: { query: book_happy_query }
-          post "/graphql", params: { query: sad_query_not_uniq_isbn }
-
           json = JSON.parse(response.body, symbolize_names: true)
+          first_book_isbn = json[:data][:createBook][:book][:isbn]
 
-          expect(json[:data][:createBook]).to be_nil
-          expect(json[:errors][0][:message]).to eq("Isbn has already been taken")
+          post "/graphql", params: { query: not_uniq_isbn }
+          json = JSON.parse(response.body, symbolize_names: true)
+          book = json[:data][:createBook][:book]
+          expect(book[:isbn]).to eq("1784752223")
+          expect(book[:isbn]).to eq(first_book_isbn)
+          expect(book[:title]).to eq("Jurassic Park")
         end
       end
     end
@@ -61,6 +72,7 @@ def book_happy_query
           pageCount: 480
           summary: "summary"
           imageUrl: "http://books.google.com/books/content?id=uo7TsgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+          userId: 1
         }
       ) {
           book {
@@ -88,6 +100,7 @@ def sad_query_missing_attrs
           pageCount: 480
           summary: "summary"
           imageUrl: "http://books.google.com/books/content?id=uo7TsgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+          userId: 1
         }
       ) {
           book {
@@ -104,7 +117,7 @@ def sad_query_missing_attrs
   GQL
 end
 
-def sad_query_not_uniq_isbn
+def not_uniq_isbn
   <<~GQL
     mutation {
       createBook(
@@ -115,6 +128,7 @@ def sad_query_not_uniq_isbn
           pageCount: 480
           summary: "summary"
           imageUrl: "http://books.google.com/books/content?id=uo7TsgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+          userId: 1
         }
       ) {
           book {
