@@ -15,7 +15,7 @@ module Types
     field :borrower, Types::UserType, null: false
 
     def borrower
-      borrower_id = UserBook.where(book_id: object.id).first.borrower_id
+      borrower_id = UserBook.find_by(book_id: object.id).borrower_id
       if borrower_id.nil?
         {}
       else
