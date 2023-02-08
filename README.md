@@ -89,6 +89,8 @@ Default host is `http://localhost:3000`
 <br></br>
 
 ## GraphQL Endpoints
+[Bookworm API](https://bookworm-be.herokuapp.com/graphql)
+
 ### Users
 ```
 {
@@ -181,7 +183,7 @@ Default host is `http://localhost:3000`
   <tr>
     <td>
       <a href="https://github.com/amikaross">GitHub</a><br>
-      <a href="">LinkedIn</a>
+      <a href="https://www.linkedin.com/in/amanda-ross-2a62093a/">LinkedIn</a>
     </td>
     <td>
       <a href="https://github.com/naomiyocum">GitHub</a><br>
