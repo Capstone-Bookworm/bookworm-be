@@ -22,8 +22,7 @@ module Types
     field :users, [Types::UserType], null: false
 
     def users
-      User.joins(:user_books)
-        .where("user_books.book_id = #{object.id}")
+      # ForeignKeyLoader.for(User).load_all
     end
   end
 end
