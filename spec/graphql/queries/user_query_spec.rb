@@ -26,8 +26,6 @@ RSpec.describe Types::QueryType do
       expect(user).to have_key("pendingRequested")
       expect(user["pendingRequested"]).to be_an(Array)
 
-      expect(user).to have_key("pendingReturned")
-      expect(user["pendingReturned"]).to be_an(Array)
 
       expect(user).to have_key("unavailableBooks")
       expect(user["unavailableBooks"]).to be_an(Array)
@@ -52,17 +50,6 @@ RSpec.describe Types::QueryType do
                 imageUrl
             },
             pendingRequested {
-                id,
-                title,
-                imageUrl,
-                borrower {
-                    id,
-                    userName,
-                    location,
-                    emailAddress    
-                }
-            },
-            pendingReturned {
                 id,
                 title,
                 imageUrl,

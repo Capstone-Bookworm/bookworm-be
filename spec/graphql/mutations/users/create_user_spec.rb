@@ -38,49 +38,48 @@ module Mutations
           expect(json[:errors][0][:message]).to eq("User name can't be blank, Location can't be blank")
         end
       end
+      def happy_query
+        <<~GQL
+          mutation {
+            createUser(
+              input: {
+                userName: "Amanda"
+                emailAddress: "amr@example.com"
+                location: "Denver"
+              }
+            ) {
+                user {
+                userName
+                emailAddress
+                id
+                location
+              }
+            }
+          }
+        GQL
+      end
+      
+      def sad_query
+        <<~GQL
+        mutation {
+          createUser(
+            input: {
+              userName: ""
+              emailAddress: "amr@example.com"
+              location: ""
+            }
+          ) {
+              user {
+              userName
+              emailAddress
+              id
+              location
+            }
+          }
+        }
+      GQL
+      end
     end
   end
 end
 
-
-def happy_query
-  <<~GQL
-    mutation {
-      createUser(
-        input: {
-          userName: "Amanda"
-          emailAddress: "amr@example.com"
-          location: "Denver"
-        }
-      ) {
-          user {
-          userName
-          emailAddress
-          id
-          location
-        }
-      }
-    }
-  GQL
-end
-
-def sad_query
-  <<~GQL
-  mutation {
-    createUser(
-      input: {
-        userName: ""
-        emailAddress: "amr@example.com"
-        location: ""
-      }
-    ) {
-        user {
-        userName
-        emailAddress
-        id
-        location
-      }
-    }
-  }
-GQL
-end

@@ -27,21 +27,12 @@ module Types
         .select("books.*, user_books.user_id")
     end
 
-    field :pending_returned, [Types::BookType], null: false
-
-    def pending_returned
-      Book.joins(:user_books)
-        .where("user_books.user_id = #{object.id}")
-        .where("user_books.status = 2")
-        .select("books.*, user_books.user_id")
-    end
-
     field :unavailable_books, [Types::BookType], null: false
 
     def unavailable_books
       Book.joins(:user_books)
         .where("user_books.user_id = #{object.id}")
-        .where("user_books.status = 3")
+        .where("user_books.status = 2")
         .select("books.*, user_books.user_id")
     end
 
