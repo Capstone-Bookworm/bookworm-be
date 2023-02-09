@@ -19,10 +19,9 @@ module Mutations
 
           expect(@john.user_books.first.status).to eq('pending_requested')
           result = JSON.parse(response.body, symbolize_names: true)
-          expect(result[:data][:patchUserBook][:success]).to eq('True')
         end
 
-        it "returns 'success: false' if given a bad request" do
+        it "returns an error if given a bad request" do
           expect(@john.user_books.first.status).to eq('available')
 
           post "/graphql", params: { query: sad_query }
@@ -30,7 +29,7 @@ module Mutations
           expect(@john.user_books.first.status).to eq('available')
 
           result = JSON.parse(response.body, symbolize_names: true)
-          expect(result[:data][:patchUserBook][:success]).to eq('False')
+          expect(result[:data][:patchUserBook][:error]).to eq('Record with the provided user_id and book_id not found')
         end
       end
 
@@ -43,7 +42,9 @@ module Mutations
                 borrowerId: #{@paul.id},
                 status: 1}) 
               {
-                success
+                userBook {
+                  bookId
+                }
               }
             }
         GQL
@@ -58,7 +59,7 @@ module Mutations
                 borrowerId: #{@paul.id}
                 status: 1}) 
               {
-                success
+                error
               }
             }
         GQL
