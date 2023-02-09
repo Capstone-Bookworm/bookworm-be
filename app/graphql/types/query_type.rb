@@ -4,12 +4,6 @@ module Types
     include GraphQL::Types::Relay::HasNodeField
     include GraphQL::Types::Relay::HasNodesField
 
-    field :users, [Types::UserType], null: false
-
-    def users
-      User.all
-    end
-
     field :user, Types::UserType, null: false do 
       argument :id, ID, required: true
     end
@@ -46,6 +40,20 @@ module Types
 
     def book(id:)
       Book.find(id)
+    end
+
+    field :user_login, Types::UserType, null: false do 
+      argument :email_address, String, required: true 
+    end
+
+    def user_login(email_address:) 
+      user = User.find_by(email_address: email_address)
+      
+      if user.nil?
+        raise GraphQL::ExecutionError, "User not found"
+      else
+        user
+      end
     end
   end
 end
