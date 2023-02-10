@@ -51,6 +51,15 @@ module Mutations
           expect(user.books.length).to eq(0)
           expect(another_user.books.length).to eq(1)
         end
+
+        it 'returns an error if the userbook record is not found' do 
+          post "/graphql", params: { query: query(5, 10) }
+
+          json_response = JSON.parse(response.body, symbolize_names: true)
+
+          expect(json_response[:data][:deleteBook]).to eq(nil)
+          expect(json_response[:errors][0][:message]).to eq("Record with the provided user_id and book_id not found")
+        end
       end
 
       def query(user_id, book_id)
