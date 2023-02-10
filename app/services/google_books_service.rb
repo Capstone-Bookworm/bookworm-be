@@ -18,14 +18,16 @@ class GoogleBooksService
     if json[:volumeInfo][:authors].nil? || json[:volumeInfo][:imageLinks].nil?
       nil
     else
-      {
-        title: json[:volumeInfo][:title],
-        isbn: json[:volumeInfo][:industryIdentifiers][0][:identifier],
-        author: json[:volumeInfo][:authors][0],
-        image_url: json[:volumeInfo][:imageLinks][:thumbnail],
-        page_count: json[:volumeInfo][:pageCount],
-        summary: json[:volumeInfo][:description]
-      }
+      data = {
+              title: json[:volumeInfo][:title],
+              isbn: json[:volumeInfo][:industryIdentifiers][0][:identifier],
+              author: json[:volumeInfo][:authors][0],
+              image_url: json[:volumeInfo][:imageLinks][:thumbnail],
+              page_count: json[:volumeInfo][:pageCount],
+              summary: json[:volumeInfo][:description]
+            }
+      
+      data.values.any? { |v| v.nil? } ? nil : data
     end
   end
 end
