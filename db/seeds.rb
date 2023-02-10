@@ -42,13 +42,13 @@ lauren.books << seven
 lauren.books << sins
 lauren.books << tuesdays
 UserBook.where(user: lauren, book: tuesdays).update(borrower_id: adelle.id, status: 2)
-UserBook.where(user: adelle, book: queen).update(borrower_id: lauren.id, status: 3)
+UserBook.where(user: adelle, book: queen).update(borrower_id: lauren.id, status: 2)
 
 
 naomi = User.create(user_name: "Naomi", location: "Colorado", email_address: "naomi@example.com")
 naomi.books << tuesdays
 UserBook.where(user: lauren, book: seven).update(borrower_id: naomi.id, status: 1)
-UserBook.where(user: amanda, book: ruby).update(borrower_id: naomi.id, status: 3)
+UserBook.where(user: amanda, book: ruby).update(borrower_id: naomi.id, status: 2)
 
 
 rich = User.create(user_name: "Rich", location: "South Dakota", email_address: "rich@example.com")
@@ -58,7 +58,7 @@ carnivore = Book.create(isbn: "9781628603507", title: "The Carnivore Diet", auth
 rich.books << moon
 rich.books << sovereign
 rich.books << carnivore
-UserBook.where(user: naomi, book: tuesdays).update(borrower_id: rich.id, status: 3)
+UserBook.where(user: naomi, book: tuesdays).update(borrower_id: rich.id, status: 2)
 UserBook.where(user: joshua, book: martian).update(borrower_id: rich.id, status: 1)
 UserBook.where(user: rich, book: carnivore).update(borrower_id: naomi.id, status: 1)
 
@@ -66,4 +66,4 @@ sage = User.create(user_name: "Sage", location: "California", email_address: "sa
 power = Book.create(isbn: "9781577313113", title: "The Power of Now", author: "Eckhart Tolle", image_url: "http://books.google.com/books/content?id=sQYqRCIhFAMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api", page_count: 256, summary: "To make the journey into the Now")
 sage.books << power
 UserBook.where(user: sage, book: power).update(borrower_id: rich.id, status: 2)
-UserBook.where(user: joshua, book: elsewhere).update(borrower_id: sage.id, status: 3)
+UserBook.where(user: joshua, book: elsewhere).update(borrower_id: sage.id, status: 2)
