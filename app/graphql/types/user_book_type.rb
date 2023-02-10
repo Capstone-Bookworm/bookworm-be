@@ -6,7 +6,7 @@ module Types
     field :book_id, Integer
     field :user_id, Integer
     field :borrower_id, Integer
-    field :status, Integer
+    field :status, String
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
   end
