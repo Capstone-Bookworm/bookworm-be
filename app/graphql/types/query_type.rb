@@ -23,7 +23,10 @@ module Types
     field :books, [Types::BookType], null: false
 
     def books
-      Book.take(20)
+      Book
+        .joins(:user_books)
+        .where("user_books.status = 0")
+        .take(20)
     end
 
     field :book_search, [Types::BookType], null: false do
@@ -31,7 +34,11 @@ module Types
     end
 
     def book_search(title:)
-      Book.where("title ILIKE ?", "%#{title}%").limit(20)
+      Book
+        .joins(:user_books)
+        .where("books.title ILIKE ?", "%#{title}%")
+        .where("user_books.status = 0")
+        .limit(20)
     end
 
     field :book, Types::BookType, null: false do 
