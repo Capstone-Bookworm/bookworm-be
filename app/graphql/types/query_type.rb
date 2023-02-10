@@ -38,7 +38,6 @@ module Types
         .joins(:user_books)
         .where("books.title ILIKE ?", "%#{title}%")
         .where("user_books.status = 0")
-        .select("books.*, user_books.id")
         .limit(20)
     end
 
