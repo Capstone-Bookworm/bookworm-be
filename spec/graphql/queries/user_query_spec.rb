@@ -26,12 +26,28 @@ RSpec.describe Types::QueryType do
       expect(user).to have_key("pendingRequested")
       expect(user["pendingRequested"]).to be_an(Array)
 
-
       expect(user).to have_key("unavailableBooks")
       expect(user["unavailableBooks"]).to be_an(Array)
 
       expect(user).to have_key("borrowedBooks")
       expect(user["borrowedBooks"]).to be_an(Array)
+    end
+
+    describe 'borrowed_books' do 
+      it 'only returns books that have been approved to be borrowed' do 
+        user = create(:user)
+        book_owner = create(:user)
+        borrowed_book = create(:book)
+        pending_borrowed_book = create(:book)
+        UserBook.create(user: book_owner, book: borrowed_book, status: 2, borrower_id: user.id)
+        UserBook.create(user: book_owner, book: pending_borrowed_book, status: 1, borrower_id: user.id)
+
+        result = BookwormBeSchema.execute(query(user.id)).as_json
+        user_info = result["data"]["user"]
+
+        expect(user_info["borrowedBooks"].length).to eq(1)
+        expect(user_info["borrowedBooks"][0]["id"]).to eq(borrowed_book.id.to_s)
+      end
     end
   end
 
