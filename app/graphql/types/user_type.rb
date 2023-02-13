@@ -39,7 +39,9 @@ module Types
     field :borrowed_books, [Types::BookType], null: false
 
     def borrowed_books
-      Book.joins(:user_books).where("user_books.borrower_id = #{object.id}").select("books.*, user_books.id")
+      Book.joins(:user_books)
+          .where("user_books.borrower_id = #{object.id}")
+          .where("user_books.status = 2")
     end
   end
 end
