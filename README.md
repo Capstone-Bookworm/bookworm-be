@@ -10,6 +10,7 @@ Visit our Front End Site!
 
 Our Back End is hosted here:
 - [Bookworm API](https://bookworm-be.herokuapp.com/graphql)
+
 <br></br>
 ## Built With
  ![Ruby](https://img.shields.io/badge/Ruby-CC342D?style=for-the-badge&logo=ruby&logoColor=white)
@@ -90,19 +91,11 @@ Default host is `http://localhost:3000`
 
 ## GraphQL Endpoints
 [Bookworm API](https://bookworm-be.herokuapp.com/graphql)
+<br><br>
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/25624992-05ac259d-b218-4a8e-b168-ac63eceb107e?action=collection%2Ffork&collection-url=entityId%3D25624992-05ac259d-b218-4a8e-b168-ac63eceb107e%26entityType%3Dcollection%26workspaceId%3D108bd5ac-a6a0-45d2-97fc-ecad3177f77f)
 
-### Users
-```
-{
-    users {
-        userName
-        location
-        emailAddress
-    }
-}
-```
 ### User ID
-```
+```graphql
 {
     user(id:1) {
         userName
@@ -112,7 +105,7 @@ Default host is `http://localhost:3000`
 }
 ```
 ### Books
-```
+```graphql
 {
     books {
         id
@@ -126,7 +119,7 @@ Default host is `http://localhost:3000`
 }
 ```
 ### Book ID
-```
+```graphql
 {
     book(id:1){
         id
@@ -140,9 +133,9 @@ Default host is `http://localhost:3000`
 }
 ```
 ### Book Search
-```
+```graphql
 {
-    bookSearch(title:"Title") {
+    bookSearch(title: "Jurassic Park") {
     id
     isbn
     title
@@ -154,9 +147,9 @@ Default host is `http://localhost:3000`
 }
 ```
 ### Google Books
-```
+```graphql
 {
-    googleBooks(title: "Title") {
+    googleBooks(title: "Jurassic Park") {
         isbn
         title
         author
@@ -164,6 +157,73 @@ Default host is `http://localhost:3000`
         summary
         pageCount
     }
+}
+```
+### createUser mutation
+```graphql
+mutation{
+    createUser(input: {
+        userName: "Zuko",
+        emailAddress: "fire_nation@example.com",
+        location: "Denver"
+    }) { user {
+            id
+            userName
+            emailAddress
+            location
+            }
+       }
+}
+```
+### createBook mutation
+```graphql
+mutation{
+    createBook(input: {
+        userId: 8
+        isbn: "9780525657743"
+        title: "Crying in H Mart"
+        author: "Michelle Zauner"
+        summary: "NEW YORK TIMES BEST SELLER • From the indie rock sensation known as Japanese Breakfast, an unforgettable memoir about family, food, grief, love, and growing up Korean American—“in losing her mother and cooking to bring her back to life, Zauner became herself” (NPR)"
+        pageCount: 257
+        imageUrl: "http://books.google.com/books/content?id=30UlEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    }) { book {
+            id
+            isbn
+            title
+            author
+            summary
+            pageCount
+            imageUrl
+            }
+       }
+}
+```
+### patchUserBook mutation
+```graphql
+mutation{
+    patchUserBook(input: {
+        userId: 4,
+        bookId: 10,
+        borrowerId: 1,
+        status: 1
+    }) { userBook {
+            bookId
+            status
+            }
+       }
+}
+```
+### deleteBook mutation
+```graphql
+mutation {
+    deleteBook(
+        input: {
+        userId: 8
+        bookId: 16
+        }
+    ) {
+        success
+      }
 }
 ```
 <br></br>
