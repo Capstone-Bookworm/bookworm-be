@@ -26,6 +26,7 @@ module Types
       Book
         .joins(:user_books)
         .where("user_books.status = 0")
+        .distinct
         .take(20)
     end
 
