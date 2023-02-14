@@ -28,6 +28,7 @@ module Types
     def users
       User.joins(:user_books)
         .where("user_books.book_id = #{object.id}")
+        .where("user_books.status = 0")
     end
   end
 end
