@@ -29,5 +29,25 @@ RSpec.describe Types::QueryType do
         expect(result_hash[1][:googleBooks][0][:summary]).to be_a String
       end
     end
+
+    it 'can handle an empty query' do 
+      query = <<~GQL
+        query {
+          googleBooks(title: "") {
+            isbn
+            title
+            author
+            imageUrl
+            pageCount
+            summary
+          }
+        }
+      GQL
+
+      result = BookwormBeSchema.execute(query).first.to_json
+      result_hash = JSON.parse(result, symbolize_names: true)
+
+      expect(result_hash[1][:googleBooks]).to eq([])
+    end
   end
 end

@@ -18,7 +18,7 @@ module Mutations
           }
         else
           user_book.status = status
-          user_book.borrower_id = borrower_id
+          status == 0 ? user_book.borrower_id = nil : user_book.borrower_id = borrower_id
           user_book.save
           {
             user_book: user_book
