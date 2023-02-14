@@ -11,7 +11,7 @@ class GoogleBooksService
       req.params['intitle'] = title
     end
     json = JSON.parse(response.body, symbolize_names: true)
-    json[:items].map { |book| select_data(book) }
+    json[:items] ? json[:items].map { |book| select_data(book) } : []
   end
 
   def self.select_data(json)

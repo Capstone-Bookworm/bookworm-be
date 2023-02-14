@@ -30,7 +30,8 @@ RSpec.describe Types::QueryType do
       end
     end
 
-    it 'can handle an empty query' do 
+    it 'can handle an empty string query' do 
+      
       query = <<~GQL
         query {
           googleBooks(title: "") {
@@ -44,10 +45,32 @@ RSpec.describe Types::QueryType do
         }
       GQL
 
-      result = BookwormBeSchema.execute(query).first.to_json
-      result_hash = JSON.parse(result, symbolize_names: true)
+      VCR.use_cassette('empty string') do 
+        result = BookwormBeSchema.execute(query).first.to_json
+        result_hash = JSON.parse(result, symbolize_names: true)
 
-      expect(result_hash[1][:googleBooks]).to eq([])
+        expect(result_hash[1][:googleBooks]).to eq([])
+      end
+    end
+
+    it 'can handle a query that does not return results' do 
+      query = <<~GQL
+        query {
+          googleBooks(title: "asdfklsadjfg jaksdlfj sd") {
+            isbn
+            title
+            author
+            imageUrl
+            pageCount
+            summary
+          }
+        }
+      GQL
+      VCR.use_cassette('asdfklsadjfg jaksdlfj sd') do
+        result = BookwormBeSchema.execute(query).first.to_json
+        result_hash = JSON.parse(result, symbolize_names: true)
+        expect(result_hash[1][:googleBooks]).to eq([])
+      end
     end
   end
 end
