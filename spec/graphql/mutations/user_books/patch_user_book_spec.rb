@@ -31,6 +31,15 @@ module Mutations
           result = JSON.parse(response.body, symbolize_names: true)
           expect(result[:data][:patchUserBook][:error]).to eq('Record with the provided user_id and book_id not found')
         end
+
+        it "sets the borrower_id to nil if the book is returned" do
+          expect(@john.user_books.first.status).to eq('available')
+
+          post "/graphql", params: { query: return_query }
+
+          expect(@john.user_books.first.status).to eq('available')
+          expect(@john.user_books.first.borrower_id).to eq(nil)
+        end
       end
 
       def happy_query
@@ -41,6 +50,23 @@ module Mutations
                 bookId: #{@book.id},
                 borrowerId: #{@paul.id},
                 status: 1}) 
+              {
+                userBook {
+                  bookId
+                }
+              }
+            }
+        GQL
+      end
+
+      def return_query
+        <<~GQL
+          mutation {
+            patchUserBook(input: {
+                userId: #{@john.id},
+                bookId: #{@book.id},
+                borrowerId: #{@paul.id},
+                status: 0}) 
               {
                 userBook {
                   bookId
