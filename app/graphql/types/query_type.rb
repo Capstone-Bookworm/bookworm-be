@@ -27,6 +27,7 @@ module Types
         .joins(:user_books)
         .where("user_books.status = 0")
         .take(20)
+        .uniq
     end
 
     field :book_search, [Types::BookType], null: false do
