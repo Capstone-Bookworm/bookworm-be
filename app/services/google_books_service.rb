@@ -7,8 +7,7 @@ class GoogleBooksService
 
   def self.search(title)
     response = conn.get('/books/v1/volumes') do |req|
-      req.params['q'] = title
-      req.params['intitle'] = title
+      req.params['q'] = 'intitle:' + title
     end
     json = JSON.parse(response.body, symbolize_names: true)
     json[:items] ? json[:items].map { |book| select_data(book) } : []
