@@ -89,7 +89,7 @@ RSpec.describe Types::QueryType do
       VCR.use_cassette('only spaces') do
         result = BookwormBeSchema.execute(query).first.to_json
         result_hash = JSON.parse(result, symbolize_names: true)
-        expect(result_hash[1][:googleBooks]).to be_an(Array)
+        expect(result_hash[1][:googleBooks]).to eq([])
       end
     end
   end
