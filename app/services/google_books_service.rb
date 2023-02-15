@@ -14,7 +14,7 @@ class GoogleBooksService
   end
 
   def self.select_data(json)
-    if json[:volumeInfo][:authors].nil? || json[:volumeInfo][:imageLinks].nil?
+    if json[:volumeInfo][:authors].nil? || json[:volumeInfo][:imageLinks].nil? || json[:volumeInfo][:industryIdentifiers].nil?
       nil
     else
       data = {

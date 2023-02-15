@@ -1,6 +1,6 @@
 class BooksFacade
   def self.get_book_objects(title)
-    if title == ""
+    if title.strip.empty?
       []
     else
       books_json = GoogleBooksService.search(title)
