@@ -1,9 +1,13 @@
 class BooksFacade
   def self.get_book_objects(title)
-    books_json = GoogleBooksService.search(title)
+    if title == ""
+      []
+    else
+      books_json = GoogleBooksService.search(title)
   
-    books_json.map do |book_data|
-      BookPoro.new(book_data) if !book_data.nil?
-    end.compact
+      books_json.map do |book_data|
+        BookPoro.new(book_data) if !book_data.nil?
+      end.compact
+    end
   end
 end
