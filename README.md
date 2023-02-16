@@ -8,9 +8,6 @@ This repo is the Back End part of a project built by students at [Turing School 
 Visit our Front End Site!
 - [Deployed Site](https://bookworm-fe.vercel.app/)
 
-Our Back End is hosted here:
-- [Bookworm API](https://bookworm-be.herokuapp.com/graphql)
-
 <br></br>
 ## Built With
  ![Ruby](https://img.shields.io/badge/Ruby-CC342D?style=for-the-badge&logo=ruby&logoColor=white)
@@ -90,7 +87,7 @@ Default host is `http://localhost:3000`
 <br></br>
 
 ## GraphQL Endpoints
-[Bookworm API](https://bookworm-be.herokuapp.com/graphql)
+To make calls to our server, use this endpoint: https://bookworm-be.herokuapp.com/graphql
 <br><br>
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/25624992-05ac259d-b218-4a8e-b168-ac63eceb107e?action=collection%2Ffork&collection-url=entityId%3D25624992-05ac259d-b218-4a8e-b168-ac63eceb107e%26entityType%3Dcollection%26workspaceId%3D108bd5ac-a6a0-45d2-97fc-ecad3177f77f)
 
@@ -251,7 +248,6 @@ mutation {
     </td>
     <td>
       <a href="https://github.com/Freeing3092">GitHub</a><br>
-      <a href="">LinkedIn</a>
     </td>
   </tr>
 </table>
